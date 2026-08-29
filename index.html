@@ -1,859 +1,243 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TU BSc Agriculture Entrance Course</title>
-  <style>
-    :root {
-      --ink: #17211a;
-      --muted: #5f6f63;
-      --line: #d9e2d2;
-      --soft: #f6f8f1;
-      --panel: #ffffff;
-      --green: #2f7a4d;
-      --green-dark: #1f5d39;
-      --gold: #c98928;
-      --blue: #2d6f8f;
-      --red: #b4443f;
-      --shadow: 0 18px 45px rgba(31, 55, 39, 0.1);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--ink);
-      background:
-        linear-gradient(135deg, rgba(47, 122, 77, 0.12), rgba(201, 137, 40, 0.08) 45%, rgba(45, 111, 143, 0.1)),
-        #fbfcf7;
-    }
-
-    button,
-    select {
-      font: inherit;
-    }
-
-    .shell {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 290px minmax(0, 1fr);
-    }
-
-    aside {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      padding: 22px 18px;
-      background: rgba(255, 255, 255, 0.9);
-      border-right: 1px solid var(--line);
-      overflow: auto;
-    }
-
-    main {
-      padding: 28px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-
-    .mark {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      color: white;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--green), var(--blue));
-      box-shadow: 0 10px 24px rgba(47, 122, 77, 0.22);
-    }
-
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
-    }
-
-    h1 {
-      font-size: clamp(1.75rem, 3vw, 3.3rem);
-      line-height: 1.02;
-      letter-spacing: 0;
-      max-width: 820px;
-      margin-bottom: 14px;
-    }
-
-    h2 {
-      font-size: 1.32rem;
-      margin-bottom: 12px;
-    }
-
-    h3 {
-      font-size: 1rem;
-      margin-bottom: 8px;
-    }
-
-    .brand strong {
-      display: block;
-      font-size: 0.96rem;
-    }
-
-    .brand span {
-      display: block;
-      color: var(--muted);
-      font-size: 0.82rem;
-    }
-
-    .nav {
-      display: grid;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    .nav button,
-    .mode button,
-    .action,
-    .choice {
-      border: 1px solid var(--line);
-      background: var(--panel);
-      color: var(--ink);
-      cursor: pointer;
-      transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
-    }
-
-    .nav button {
-      width: 100%;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      text-align: left;
-    }
-
-    .nav button:hover,
-    .choice:hover,
-    .action:hover,
-    .mode button:hover {
-      transform: translateY(-1px);
-      border-color: rgba(47, 122, 77, 0.45);
-    }
-
-    .nav button.active,
-    .mode button.active {
-      color: white;
-      border-color: var(--green);
-      background: var(--green);
-    }
-
-    .count {
-      flex: 0 0 auto;
-      min-width: 28px;
-      padding: 3px 7px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      text-align: center;
-      background: var(--soft);
-      color: var(--muted);
-    }
-
-    .nav button.active .count {
-      color: var(--green-dark);
-      background: white;
-    }
-
-    .stats {
-      display: grid;
-      gap: 10px;
-      padding: 14px;
-      border-radius: 8px;
-      background: var(--soft);
-      border: 1px solid var(--line);
-    }
-
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    .stat-row strong {
-      color: var(--ink);
-    }
-
-    .meter {
-      height: 9px;
-      border-radius: 999px;
-      overflow: hidden;
-      background: #e6ecdf;
-    }
-
-    .meter span {
-      display: block;
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--green), var(--gold));
-      transition: width 0.25s ease;
-    }
-
-    .hero {
-      min-height: 240px;
-      display: grid;
-      align-content: end;
-      padding: 42px;
-      margin-bottom: 22px;
-      color: white;
-      background:
-        linear-gradient(90deg, rgba(17, 32, 22, 0.86), rgba(17, 32, 22, 0.46)),
-        url("https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1800&q=80");
-      background-size: cover;
-      background-position: center;
-      box-shadow: var(--shadow);
-      border-radius: 8px;
-    }
-
-    .hero p {
-      max-width: 700px;
-      margin-bottom: 0;
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 1.02rem;
-      line-height: 1.55;
-    }
-
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 18px;
-    }
-
-    .mode {
-      display: flex;
-      padding: 4px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.75);
-      border-radius: 8px;
-    }
-
-    .mode button {
-      min-height: 38px;
-      padding: 8px 12px;
-      border-radius: 6px;
-      border: 0;
-      background: transparent;
-    }
-
-    .tools {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-
-    select,
-    .action {
-      min-height: 40px;
-      border-radius: 8px;
-      padding: 8px 12px;
-    }
-
-    select {
-      border: 1px solid var(--line);
-      background: white;
-      color: var(--ink);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 330px;
-      gap: 20px;
-      align-items: start;
-    }
-
-    .lesson,
-    .side-panel {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: var(--shadow);
-    }
-
-    .lesson {
-      min-height: 430px;
-      padding: 24px;
-    }
-
-    .side-panel {
-      padding: 20px;
-    }
-
-    .question-meta {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 12px;
-    }
-
-    .question-text {
-      font-size: clamp(1.25rem, 2vw, 1.8rem);
-      line-height: 1.28;
-      margin-bottom: 20px;
-    }
-
-    .choices {
-      display: grid;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .choice {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 36px minmax(0, 1fr);
-      gap: 12px;
-      align-items: center;
-      min-height: 54px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      text-align: left;
-    }
-
-    .choice-key {
-      width: 32px;
-      height: 32px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      background: var(--soft);
-      color: var(--green-dark);
-      font-weight: 800;
-    }
-
-    .choice.correct {
-      border-color: rgba(47, 122, 77, 0.55);
-      background: rgba(47, 122, 77, 0.1);
-    }
-
-    .choice.wrong {
-      border-color: rgba(180, 68, 63, 0.55);
-      background: rgba(180, 68, 63, 0.1);
-    }
-
-    .feedback {
-      display: none;
-      padding: 14px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: var(--soft);
-      line-height: 1.5;
-    }
-
-    .feedback.show {
-      display: block;
-    }
-
-    .feedback strong {
-      color: var(--green-dark);
-    }
-
-    .lesson-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .primary {
-      color: white;
-      background: var(--green);
-      border-color: var(--green);
-    }
-
-    .outline {
-      color: var(--green-dark);
-      background: white;
-    }
-
-    .topic-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .topic {
-      padding: 12px;
-      border-left: 4px solid var(--green);
-      background: var(--soft);
-      border-radius: 0 8px 8px 0;
-      line-height: 1.45;
-    }
-
-    .review-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 12px;
-      max-height: 300px;
-      overflow: auto;
-    }
-
-    .review-item {
-      padding: 10px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: white;
-      font-size: 0.9rem;
-    }
-
-    .review-item strong {
-      color: var(--red);
-    }
-
-    .empty {
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    @media (max-width: 960px) {
-      .shell {
-        grid-template-columns: 1fr;
-      }
-
-      aside {
-        position: static;
-        height: auto;
-      }
-
-      .nav {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      main {
-        padding: 18px;
-      }
-    }
-
-    @media (max-width: 620px) {
-      .hero {
-        min-height: 280px;
-        padding: 26px;
-      }
-
-      .nav {
-        grid-template-columns: 1fr;
-      }
-
-      .toolbar,
-      .tools {
-        align-items: stretch;
-      }
-
-      .toolbar > *,
-      .tools > *,
-      select,
-      .action {
-        width: 100%;
-      }
-
-      .mode {
-        width: 100%;
-      }
-
-      .mode button {
-        flex: 1;
-      }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EntrancePrep Studio | Study, Notes & Exam Practice Hub</title>
+  <meta name="description" content="All-in-one entrance preparation platform with 200+ verified MCQs, Student Notes Studio, 3D Flashcards, Formula Cheat Sheets, and Pomodoro Timer.">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <div class="shell">
-    <aside>
-      <div class="brand">
-        <div class="mark">AG</div>
+
+  <div class="app-shell">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand-box">
+        <div class="brand-icon">🎓</div>
         <div>
-          <strong>BSc Ag Entrance</strong>
-          <span>Interactive practice course</span>
+          <h1 class="brand-title">EntrancePrep</h1>
+          <span class="brand-tag">Studio & Practice Hub</span>
         </div>
       </div>
 
-      <nav class="nav" id="subjectNav"></nav>
+      <ul class="nav-menu">
+        <li>
+          <button class="nav-item-btn active" id="nav-practice" onclick="app.switchView('practice')">
+            <i class="fas fa-tasks"></i>
+            <span>Practice Quizzes</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item-btn" id="nav-notes" onclick="app.switchView('notes')">
+            <i class="fas fa-edit"></i>
+            <span>Notes Studio</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item-btn" id="nav-flashcards" onclick="app.switchView('flashcards')">
+            <i class="fas fa-clone"></i>
+            <span>Flashcards Deck</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item-btn" id="nav-formulas" onclick="app.switchView('formulas')">
+            <i class="fas fa-square-root-variable"></i>
+            <span>Formula Cheatsheets</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item-btn" id="nav-pomodoro" onclick="app.switchView('pomodoro')">
+            <i class="fas fa-clock"></i>
+            <span>Focus Timer</span>
+          </button>
+        </li>
+      </ul>
 
-      <div class="stats">
-        <div class="stat-row"><span>Answered</span><strong id="answeredStat">0 / 200</strong></div>
-        <div class="stat-row"><span>Score</span><strong id="scoreStat">0%</strong></div>
-        <div class="meter" aria-label="Progress"><span id="progressBar"></span></div>
+      <div class="sidebar-footer">
+        <button class="theme-toggle-btn" onclick="app.toggleTheme()">
+          <i class="fas fa-moon"></i>
+          <span>Toggle Dark Mode</span>
+        </button>
       </div>
     </aside>
 
-    <main>
-      <section class="hero">
-        <h1>TU BSc Agriculture Entrance Course</h1>
-        <p>Study by subject, answer MCQs, reveal guide notes, and keep a review list of mistakes while preparing for agriculture entrance practice.</p>
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-search">
+          <input type="text" placeholder="Search questions, notes, or formulas..." oninput="if(app) { app.switchView('notes'); }" />
+        </div>
+
+        <div class="header-stats">
+          <div class="stat-badge" style="color: var(--brand-primary);">
+            <span>🏆</span>
+            <span id="headerScore">0 pts</span>
+          </div>
+          <div class="stat-badge" style="color: var(--color-purple);">
+            <span>📝</span>
+            <span id="headerNotesCount">0 Notes</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- VIEW 1: Practice & Quiz Hub -->
+      <section class="view-section active" id="view-practice">
+        <h2 class="section-title">Verified Entrance Exam Practice</h2>
+        <p class="section-subtitle">Select a subject or practice across all core entrance exam subjects with step-by-step solutions.</p>
+
+        <div class="subject-filter-pills">
+          <button class="pill-btn active" data-subject="all">All Subjects</button>
+          <button class="pill-btn" data-subject="physics">Physics</button>
+          <button class="pill-btn" data-subject="chemistry">Chemistry</button>
+          <button class="pill-btn" data-subject="math">Mathematics</button>
+          <button class="pill-btn" data-subject="biology">Biology & Agriculture</button>
+          <button class="pill-btn" data-subject="cs">Computer Science</button>
+          <button class="pill-btn" data-subject="aptitude">General Aptitude</button>
+          <button class="pill-btn" data-subject="english">English Grammar</button>
+        </div>
+
+        <div class="quiz-card" id="quizCard">
+          <!-- Dynamically rendered by app.js -->
+        </div>
       </section>
 
-      <div class="toolbar">
-        <div class="mode" aria-label="Study mode">
-          <button id="learnMode" class="active" type="button">Learn</button>
-          <button id="quizMode" type="button">Quiz</button>
-          <button id="reviewMode" type="button">Review</button>
-        </div>
-        <div class="tools">
-          <select id="questionPicker" aria-label="Choose question"></select>
-          <button class="action outline" id="shuffleBtn" type="button">Shuffle</button>
-          <button class="action outline" id="resetBtn" type="button">Reset</button>
-        </div>
-      </div>
+      <!-- VIEW 2: Student Notes Studio -->
+      <section class="view-section" id="view-notes">
+        <h2 class="section-title">Student Notes Studio</h2>
+        <p class="section-subtitle">Write, edit, organize, and export your study notes. Auto-saved directly to your browser.</p>
 
-      <div class="grid">
-        <section class="lesson" id="lesson"></section>
-        <aside class="side-panel">
-          <h2>Guide</h2>
-          <p class="empty" id="courseHint">Choose a subject, answer the question, then use the guide note to revise the topic behind it.</p>
-          <div class="topic-list" id="topicList"></div>
-          <h2 style="margin-top: 22px;">Review Queue</h2>
-          <div class="review-list" id="reviewList"></div>
-        </aside>
-      </div>
-    </main>
+        <div class="notes-layout">
+          <div class="notes-sidebar">
+            <button class="btn-accent" onclick="app.createNewNote()">
+              <i class="fas fa-plus"></i> New Study Note
+            </button>
+            <div id="notesList">
+              <!-- Dynamically rendered by app.js -->
+            </div>
+          </div>
+
+          <div class="editor-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <select id="noteSubjectSelect" style="padding: 6px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-main); font-weight: 600;">
+                <option value="General">General Notes</option>
+                <option value="Physics">Physics</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Biology">Biology</option>
+                <option value="Computer Science">Computer Science</option>
+              </select>
+
+              <button class="pill-btn" onclick="app.exportCurrentNote()">
+                <i class="fas fa-download"></i> Export as Markdown
+              </button>
+            </div>
+
+            <input type="text" id="noteTitleInput" class="note-title-input" placeholder="Note Title (e.g. Physics Formula Summary)" />
+            <textarea id="noteContentArea" class="note-textarea" placeholder="Start typing your notes here in Markdown or plain text..."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: 3D Flashcards Deck -->
+      <section class="view-section" id="view-flashcards">
+        <h2 class="section-title">Formula & Memory Trainer</h2>
+        <p class="section-subtitle">Flip cards to test your memory on key entrance exam formulas and definitions.</p>
+
+        <div style="text-align: center; margin-bottom: 16px; font-weight: 700; color: var(--text-muted);" id="flashCount">
+          Card 1 of 6
+        </div>
+
+        <div class="flashcard-wrapper">
+          <div class="flashcard-inner" id="flashInner" onclick="app.flipFlashcard()">
+            <div class="flashcard-front">
+              <span style="font-size: 12px; color: var(--brand-primary); font-weight: 800; text-transform: uppercase; margin-bottom: 12px;">Question / Concept</span>
+              <h3 id="flashFront" style="font-size: 20px;">Loading flashcard...</h3>
+              <span style="font-size: 12px; color: var(--text-muted); margin-top: 24px;">Click card to flip 🔄</span>
+            </div>
+            <div class="flashcard-back">
+              <span style="font-size: 12px; color: var(--color-success); font-weight: 800; text-transform: uppercase; margin-bottom: 12px;">Answer / Formula</span>
+              <h3 id="flashBack" style="font-size: 20px;">Loading answer...</h3>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; margin-top: 24px;">
+            <button class="pill-btn" onclick="app.prevFlashcard()">← Previous Card</button>
+            <button class="pill-btn" onclick="app.nextFlashcard()">Next Card →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: Formula Cheat Sheets -->
+      <section class="view-section" id="view-formulas">
+        <h2 class="section-title">Essential Formula Reference Library</h2>
+        <p class="section-subtitle">Quick reference tables for entrance exam equations and constants.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
+          <div style="background: var(--bg-surface); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+            <h3 style="color: var(--brand-primary); margin-bottom: 12px;"><i class="fas fa-atom"></i> Physics Mechanics</h3>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 14px;">
+              <li><strong>Velocity:</strong> v = u + at</li>
+              <li><strong>Displacement:</strong> s = ut + 1/2 at²</li>
+              <li><strong>Work:</strong> W = F · s cos(θ)</li>
+              <li><strong>Power:</strong> P = W / t = F · v</li>
+            </ul>
+          </div>
+
+          <div style="background: var(--bg-surface); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+            <h3 style="color: var(--color-purple); margin-bottom: 12px;"><i class="fas fa-flask"></i> Physical Chemistry</h3>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 14px;">
+              <li><strong>Ideal Gas:</strong> PV = nRT</li>
+              <li><strong>pH:</strong> pH = -log₁₀[H⁺]</li>
+              <li><strong>Molarity:</strong> M = moles of solute / Liters of solution</li>
+              <li><strong>Boyle's Law:</strong> P₁V₁ = P₂V₂</li>
+            </ul>
+          </div>
+
+          <div style="background: var(--bg-surface); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+            <h3 style="color: var(--color-success); margin-bottom: 12px;"><i class="fas fa-calculator"></i> Mathematics & Calculus</h3>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 14px;">
+              <li><strong>Quadratic Formula:</strong> x = [-b ± √(b² - 4ac)] / (2a)</li>
+              <li><strong>Derivative d/dx[xⁿ]:</strong> n · xⁿ⁻¹</li>
+              <li><strong>Trig Identity:</strong> sin²(x) + cos²(x) = 1</li>
+              <li><strong>Log Product Rule:</strong> log(ab) = log(a) + log(b)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 5: Pomodoro Focus Timer -->
+      <section class="view-section" id="view-pomodoro">
+        <h2 class="section-title">Pomodoro Focus Timer & Study Session</h2>
+        <p class="section-subtitle">Boost retention with 25-minute focused study blocks and 5-minute break intervals.</p>
+
+        <div style="max-width: 440px; margin: 0 auto; text-align: center; background: var(--bg-surface); padding: 40px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-md);">
+          <div style="font-size: 64px; font-weight: 800; font-family: monospace; color: var(--brand-primary); margin-bottom: 24px;" id="timerDisplay">
+            25:00
+          </div>
+
+          <div style="display: flex; justify-content: center; gap: 12px;">
+            <button class="btn-accent" id="timerToggleBtn" style="width: auto; padding: 12px 24px;" onclick="app.toggleTimer()">
+              ▶ Start Timer
+            </button>
+            <button class="pill-btn" onclick="app.resetTimer()">
+              🔄 Reset
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </div>
 
-  <script>
-    const SOURCE_FILE = "tu_bsc_ag_entrance_200_practice.md";
-    const SUBJECT_GUIDES = {
-      "Physics": ["Revise formulas before attempting numerical questions.", "Keep units clear: SI units are common entrance traps.", "Focus on motion, heat, electricity, optics, pressure, and sound."],
-      "Chemistry": ["Practice formula recognition and mole concept daily.", "Separate organic functional groups from inorganic reactions.", "Fertilizers, acids, bases, salts, and redox are high-value topics."],
-      "Botany": ["Draw small diagrams for plant parts and reproduction.", "Link function with structure: xylem, phloem, stomata, roots.", "Revise genetics ratios, hormones, taxonomy, fungi, and viruses."],
-      "Zoology": ["Study human systems as flow charts.", "Memorize disease, vector, and causative-agent pairs.", "Give extra time to digestion, circulation, endocrine, reproduction, and genetics."],
-      "Mathematics and Aptitude": ["Use short methods for percentage, ratio, and time-work.", "Avoid calculator thinking; entrance math rewards speed.", "Practice number series and common geometry formulas."],
-      "English": ["Revise prepositions, articles, voice, narration, and science vocabulary.", "Read each option aloud if grammar feels confusing.", "Keep a notebook of new agriculture and biology terms."],
-      "Agriculture GK and Basics": ["Make one-page notes for major crops of Nepal.", "Learn soil, fertilizer, irrigation, seed, crop rotation, and IPM basics.", "Connect agriculture facts with real field practice whenever possible."]
-    };
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
 
-    let questions = [];
-    let subjects = [];
-    let activeSubject = "Physics";
-    let activeIndex = 0;
-    let mode = "learn";
-    let order = [];
-    let state = JSON.parse(localStorage.getItem("agCourseState") || "{}");
-
-    const nav = document.getElementById("subjectNav");
-    const lesson = document.getElementById("lesson");
-    const picker = document.getElementById("questionPicker");
-    const topicList = document.getElementById("topicList");
-    const reviewList = document.getElementById("reviewList");
-    const answeredStat = document.getElementById("answeredStat");
-    const scoreStat = document.getElementById("scoreStat");
-    const progressBar = document.getElementById("progressBar");
-
-    fetch(SOURCE_FILE)
-      .then(response => {
-        if (!response.ok) throw new Error("Could not load practice Markdown.");
-        return response.text();
-      })
-      .then(markdown => {
-        questions = parseQuestions(markdown);
-        subjects = [...new Set(questions.map(q => q.subject))];
-        activeSubject = subjects[0] || "";
-        order = questions.map((_, index) => index);
-        render();
-      })
-      .catch(error => {
-        lesson.innerHTML = `
-          <h2>Open this course through a local server</h2>
-          <p class="empty">The browser could not load <strong>${SOURCE_FILE}</strong>. Start a local server in this folder and open the course URL.</p>
-          <p class="empty">Error: ${error.message}</p>
-        `;
-      });
-
-    document.getElementById("learnMode").addEventListener("click", () => setMode("learn"));
-    document.getElementById("quizMode").addEventListener("click", () => setMode("quiz"));
-    document.getElementById("reviewMode").addEventListener("click", () => setMode("review"));
-    document.getElementById("shuffleBtn").addEventListener("click", shuffleActiveSubject);
-    document.getElementById("resetBtn").addEventListener("click", resetProgress);
-    picker.addEventListener("change", event => {
-      activeIndex = Number(event.target.value);
-      renderLesson();
-    });
-
-    function parseQuestions(markdown) {
-      const lines = markdown.split(/\r?\n/);
-      const parsed = [];
-      let subject = "";
-
-      for (let index = 0; index < lines.length; index++) {
-        const heading = lines[index].match(/^## (.+)$/);
-        if (heading && !["Distribution", "How To Use This Set", "Quick Revision Guide"].includes(heading[1])) {
-          subject = heading[1];
-          continue;
-        }
-
-        const question = lines[index].match(/^(\d+)\.\s+(.+)$/);
-        if (!question || !subject) continue;
-
-        const optionsLine = lines[index + 1] || "";
-        const answerLine = lines[index + 2] || "";
-        const guideLine = lines[index + 3] || "";
-        const options = [...optionsLine.matchAll(/([A-D])\.\s+(.+?)(?=\s+[A-D]\.|$)/g)]
-          .map(match => ({ key: match[1], text: match[2].trim() }));
-        const answer = (answerLine.match(/^Answer:\s+([A-D])/) || [])[1];
-        const guide = guideLine.replace(/^Guide:\s*/, "").trim();
-
-        if (options.length === 4 && answer) {
-          parsed.push({
-            id: Number(question[1]),
-            subject,
-            text: question[2].trim(),
-            options,
-            answer,
-            guide
-          });
-        }
-      }
-
-      return parsed;
-    }
-
-    function render() {
-      renderNav();
-      renderPicker();
-      renderGuide();
-      renderLesson();
-      renderStats();
-      renderReview();
-    }
-
-    function renderNav() {
-      nav.innerHTML = subjects.map(subject => {
-        const count = questions.filter(q => q.subject === subject).length;
-        return `<button type="button" class="${subject === activeSubject ? "active" : ""}" data-subject="${subject}">
-          <span>${subject}</span><span class="count">${count}</span>
-        </button>`;
-      }).join("");
-
-      nav.querySelectorAll("button").forEach(button => {
-        button.addEventListener("click", () => {
-          activeSubject = button.dataset.subject;
-          activeIndex = firstIndexForSubject(activeSubject);
-          render();
-        });
-      });
-    }
-
-    function renderPicker() {
-      const subjectIndexes = indexesForSubject(activeSubject);
-      picker.innerHTML = subjectIndexes.map(index => {
-        const q = questions[index];
-        return `<option value="${index}" ${index === activeIndex ? "selected" : ""}>${q.id}. ${q.text.slice(0, 58)}${q.text.length > 58 ? "..." : ""}</option>`;
-      }).join("");
-      if (!subjectIndexes.includes(activeIndex)) activeIndex = subjectIndexes[0] || 0;
-    }
-
-    function renderGuide() {
-      const notes = SUBJECT_GUIDES[activeSubject] || [];
-      topicList.innerHTML = notes.map(note => `<div class="topic">${note}</div>`).join("");
-    }
-
-    function renderLesson() {
-      if (mode === "review") {
-        renderReviewLesson();
-        return;
-      }
-
-      const question = questions[activeIndex];
-      if (!question) return;
-
-      const saved = state[question.id] || {};
-      const answered = saved.answer;
-      const showFeedback = mode === "learn" || answered;
-
-      lesson.innerHTML = `
-        <div class="question-meta">
-          <span>${question.subject}</span>
-          <span>Question ${question.id} of ${questions.length}</span>
-        </div>
-        <h2 class="question-text">${question.text}</h2>
-        <div class="choices">
-          ${question.options.map(option => choiceTemplate(question, option, answered)).join("")}
-        </div>
-        <div class="feedback ${showFeedback ? "show" : ""}">
-          <strong>Answer: ${question.answer}</strong><br>
-          ${question.guide}
-        </div>
-        <div class="lesson-actions">
-          <button class="action outline" id="prevBtn" type="button">Previous</button>
-          <button class="action primary" id="nextBtn" type="button">Next</button>
-          <button class="action outline" id="markBtn" type="button">${saved.review ? "Remove Review" : "Mark Review"}</button>
-        </div>
-      `;
-
-      lesson.querySelectorAll(".choice").forEach(button => {
-        button.addEventListener("click", () => answerQuestion(question.id, button.dataset.answer));
-      });
-      document.getElementById("prevBtn").addEventListener("click", previousQuestion);
-      document.getElementById("nextBtn").addEventListener("click", nextQuestion);
-      document.getElementById("markBtn").addEventListener("click", () => toggleReview(question.id));
-      picker.value = activeIndex;
-    }
-
-    function choiceTemplate(question, option, answered) {
-      let className = "";
-      if (answered) {
-        if (option.key === question.answer) className = "correct";
-        if (option.key === answered && option.key !== question.answer) className = "wrong";
-      }
-
-      return `<button class="choice ${className}" type="button" data-answer="${option.key}">
-        <span class="choice-key">${option.key}</span>
-        <span>${option.text}</span>
-      </button>`;
-    }
-
-    function renderReviewLesson() {
-      const reviewIds = Object.entries(state).filter(([, value]) => value.review).map(([id]) => Number(id));
-      const reviewQuestions = questions.filter(q => reviewIds.includes(q.id));
-      const wrongQuestions = questions.filter(q => state[q.id]?.answer && state[q.id].answer !== q.answer);
-      const list = reviewQuestions.length ? reviewQuestions : wrongQuestions;
-
-      if (!list.length) {
-        lesson.innerHTML = `
-          <h2>Review Queue</h2>
-          <p class="empty">No review questions yet. Mark difficult questions or answer a few incorrectly, and they will appear here.</p>
-        `;
-        return;
-      }
-
-      lesson.innerHTML = `
-        <h2>Review Queue</h2>
-        <div class="review-list" style="max-height: none;">
-          ${list.map(q => `
-            <button class="review-item" type="button" data-index="${questions.indexOf(q)}">
-              <strong>${q.subject} ${q.id}</strong><br>${q.text}
-            </button>
-          `).join("")}
-        </div>
-      `;
-
-      lesson.querySelectorAll(".review-item").forEach(item => {
-        item.addEventListener("click", () => {
-          activeIndex = Number(item.dataset.index);
-          activeSubject = questions[activeIndex].subject;
-          setMode("learn");
-        });
-      });
-    }
-
-    function answerQuestion(id, answer) {
-      const question = questions.find(q => q.id === id);
-      state[id] = {
-        ...state[id],
-        answer,
-        correct: answer === question.answer
-      };
-      saveState();
-      renderLesson();
-      renderStats();
-      renderReview();
-    }
-
-    function toggleReview(id) {
-      state[id] = {
-        ...state[id],
-        review: !state[id]?.review
-      };
-      saveState();
-      renderLesson();
-      renderReview();
-    }
-
-    function nextQuestion() {
-      const subjectIndexes = indexesForSubject(activeSubject);
-      const currentPosition = subjectIndexes.indexOf(activeIndex);
-      activeIndex = subjectIndexes[(currentPosition + 1) % subjectIndexes.length];
-      renderLesson();
-    }
-
-    function previousQuestion() {
-      const subjectIndexes = indexesForSubject(activeSubject);
-      const currentPosition = subjectIndexes.indexOf(activeIndex);
-      activeIndex = subjectIndexes[(currentPosition - 1 + subjectIndexes.length) % subjectIndexes.length];
-      renderLesson();
-    }
-
-    function shuffleActiveSubject() {
-      const subjectIndexes = indexesForSubject(activeSubject);
-      for (let i = subjectIndexes.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [subjectIndexes[i], subjectIndexes[j]] = [subjectIndexes[j], subjectIndexes[i]];
-      }
-      order = order.filter(index => questions[index].subject !== activeSubject).concat(subjectIndexes);
-      activeIndex = subjectIndexes[0];
-      renderPicker();
-      renderLesson();
-    }
-
-    function resetProgress() {
-      if (!confirm("Reset all answers and review marks?")) return;
-      state = {};
-      saveState();
-      render();
-    }
-
-    function setMode(nextMode) {
-      mode = nextMode;
-      document.getElementById("learnMode").classList.toggle("active", mode === "learn");
-      document.getElementById("quizMode").classList.toggle("active", mode === "quiz");
-      document.getElementById("reviewMode").classList.toggle("active", mode === "review");
-      renderLesson();
-    }
-
-    function renderStats() {
-      const answered = questions.filter(q => state[q.id]?.answer).length;
-      const correct = questions.filter(q => state[q.id]?.correct).length;
-      const score = answered ? Math.round((correct / answered) * 100) : 0;
-      answeredStat.textContent = `${answered} / ${questions.length}`;
-      scoreStat.textContent = `${score}%`;
-      progressBar.style.width = `${questions.length ? (answered / questions.length) * 100 : 0}%`;
-    }
-
-    function renderReview() {
-      const reviewQuestions = questions.filter(q => state[q.id]?.review || (state[q.id]?.answer && state[q.id].answer !== q.answer));
-      reviewList.innerHTML = reviewQuestions.length
-        ? reviewQuestions.slice(0, 12).map(q => `<div class="review-item"><strong>${q.id}. ${q.subject}</strong><br>${q.text}</div>`).join("")
-        : `<p class="empty">Marked and incorrect questions will collect here.</p>`;
-    }
-
-    function indexesForSubject(subject) {
-      const indexes = order.filter(index => questions[index].subject === subject);
-      return indexes.length ? indexes : questions.map((q, index) => q.subject === subject ? index : -1).filter(index => index >= 0);
-    }
-
-    function firstIndexForSubject(subject) {
-      return indexesForSubject(subject)[0] || 0;
-    }
-
-    function saveState() {
-      localStorage.setItem("agCourseState", JSON.stringify(state));
-    }
-  </script>
+  <!-- Scripts -->
+  <script src="js/questions.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
